@@ -1,0 +1,18 @@
+# Screenshots (old reference, not usable)
+backend-engineering/secure-coding/screenshots/
+
+# Environment
+.envrc
+.env
+.env.*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
