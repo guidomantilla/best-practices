@@ -1,7 +1,7 @@
 REPO_URL := https://raw.githubusercontent.com/guidomantilla/best-practices/main
 SKILLS_DIR := .skills
 
-.PHONY: help install-claude install-copilot install-cursor list
+.PHONY: help install-claude install-copilot install-cursor uninstall-claude uninstall-copilot uninstall-cursor uninstall-all list
 
 help: ## Show available commands
 	@echo "Best Practices — Skill Installer"
@@ -16,6 +16,8 @@ help: ## Show available commands
 	@echo "  make install-copilot TARGET=~/projects/my-app"
 	@echo "  make install-cursor TARGET=~/projects/my-app"
 	@echo "  make install-claude TARGET=~/projects/my-app SKILLS='secure-review testing-review'"
+	@echo "  make uninstall-claude TARGET=~/projects/my-app"
+	@echo "  make uninstall-all TARGET=~/projects/my-app"
 
 list: ## List available skills
 	@echo "Available skills:"
@@ -110,3 +112,71 @@ install-cursor: ## Install skills for Cursor (TARGET=<repo-path> [SKILLS='skill1
 	@echo ""
 	@echo "Done. Skills installed to $(TARGET)/.cursor/rules/"
 	@echo "Skills reference content from: $(REPO_URL)/"
+
+uninstall-claude: ## Uninstall skills from Claude Code (TARGET=<repo-path> [SKILLS='skill1 skill2'])
+	@if [ -z "$(TARGET)" ]; then echo "Error: TARGET is required. Usage: make uninstall-claude TARGET=~/projects/my-app"; exit 1; fi
+	@if [ -z "$(SKILLS)" ]; then \
+		echo "Removing all repo skills from $(TARGET)/.claude/skills/"; \
+		for dir in $(SKILLS_DIR)/*/; do \
+			skill=$$(basename $$dir); \
+			if [ -d "$(TARGET)/.claude/skills/$$skill" ]; then \
+				rm -rf "$(TARGET)/.claude/skills/$$skill"; \
+				echo "  ✓ removed $$skill"; \
+			fi; \
+		done; \
+	else \
+		echo "Removing selected skills from $(TARGET)/.claude/skills/"; \
+		for skill in $(SKILLS); do \
+			if [ -d "$(TARGET)/.claude/skills/$$skill" ]; then \
+				rm -rf "$(TARGET)/.claude/skills/$$skill"; \
+				echo "  ✓ removed $$skill"; \
+			else \
+				echo "  ✗ $$skill (not installed)"; \
+			fi; \
+		done; \
+	fi
+	@echo "Done."
+
+uninstall-cursor: ## Uninstall skills from Cursor (TARGET=<repo-path> [SKILLS='skill1 skill2'])
+	@if [ -z "$(TARGET)" ]; then echo "Error: TARGET is required. Usage: make uninstall-cursor TARGET=~/projects/my-app"; exit 1; fi
+	@if [ -z "$(SKILLS)" ]; then \
+		echo "Removing all repo rules from $(TARGET)/.cursor/rules/"; \
+		for dir in $(SKILLS_DIR)/*/; do \
+			skill=$$(basename $$dir); \
+			if [ -f "$(TARGET)/.cursor/rules/$$skill.mdc" ]; then \
+				rm -f "$(TARGET)/.cursor/rules/$$skill.mdc"; \
+				echo "  ✓ removed $$skill"; \
+			fi; \
+		done; \
+	else \
+		echo "Removing selected rules from $(TARGET)/.cursor/rules/"; \
+		for skill in $(SKILLS); do \
+			if [ -f "$(TARGET)/.cursor/rules/$$skill.mdc" ]; then \
+				rm -f "$(TARGET)/.cursor/rules/$$skill.mdc"; \
+				echo "  ✓ removed $$skill"; \
+			else \
+				echo "  ✗ $$skill (not installed)"; \
+			fi; \
+		done; \
+	fi
+	@echo "Done."
+
+uninstall-copilot: ## Print instructions to remove Copilot instructions (TARGET=<repo-path>)
+	@if [ -z "$(TARGET)" ]; then echo "Error: TARGET is required. Usage: make uninstall-copilot TARGET=~/projects/my-app"; exit 1; fi
+	@target_file="$(TARGET)/.github/copilot-instructions.md"; \
+	if [ -f "$$target_file" ]; then \
+		echo "WARNING: Copilot instructions are bundled into a single file that may contain user-owned content."; \
+		echo "Not deleting automatically to avoid data loss."; \
+		echo ""; \
+		echo "To remove, run manually:"; \
+		echo "  rm '$$target_file'"; \
+		echo ""; \
+		echo "Or edit it to keep your own sections and drop the auto-generated ones."; \
+	else \
+		echo "Nothing to remove: $$target_file does not exist."; \
+	fi
+
+uninstall-all: ## Run all uninstall targets (TARGET=<repo-path> [SKILLS='skill1 skill2'])
+	@$(MAKE) --no-print-directory uninstall-claude TARGET="$(TARGET)" SKILLS="$(SKILLS)"
+	@$(MAKE) --no-print-directory uninstall-cursor TARGET="$(TARGET)" SKILLS="$(SKILLS)"
+	@$(MAKE) --no-print-directory uninstall-copilot TARGET="$(TARGET)"
