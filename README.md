@@ -5,6 +5,7 @@ A curated knowledge base of software engineering best practices. Organized by en
 ## What this repo IS
 
 - A **proxy/index** of best practices — enumerates what to consider, references canonical sources (OWASP, CWE, NIST, CISA, Kimball, GoF, etc.)
+- **AI-assisted consultation against a curated knowledge base** — the skills query this content to produce narrative findings, gap analysis, and roadmaps
 - **Opinionated where it matters** — takes a position on trade-offs, anti-patterns, and tooling choices
 - **Written for developers** — deep on what devs own, lighter on what infra/platform teams own
 - **Multi-domain** — backend is the canonical base, other domains reference it and add domain-specific content
@@ -17,6 +18,25 @@ A curated knowledge base of software engineering best practices. Organized by en
 - Not framework-specific — principles are language/framework-agnostic (tooling is mentioned as examples)
 - Not exhaustive — covers the most impactful practices, not every edge case
 - Not static — evolves with the industry (content is dated 2026, reviewed for currency)
+- **Not a substitute for static analyzers.** The repo recommends specific analyzers per language/topic — the analyzers enforce, this repo helps decide *what* to enforce.
+- **Not a PR review bot.** Skills are not designed for automated per-PR runs in CI. Output varies between invocations.
+- **Not a quality gate.** Severity labels (High/Medium/Low) are reading aids, not thresholds for automated blocking.
+- **Not language-specific.** No *Effective Java*, no *Idiomatic Go*, no *Clean Code* book content, no PEP 8 detail. Those exist; this repo references them as tools, doesn't replace them.
+- **Not opinion-free.** "Opinionated" means the author has taken positions on trade-offs. Read positions as informed opinion, not industry consensus.
+- **Not a playbook.** Lists what to consider, not what to do in order.
+
+## How this compares to tools you may know
+
+If you've used the tools below, this is how they relate. They are complementary — none replaces another.
+
+| Tool | What it is | Output | When to use |
+|---|---|---|---|
+| SonarQube · Semgrep · ruff · gosec | Static analyzer with deterministic rules | Reproducible findings, exit codes | In CI, every commit |
+| Greptile · CodeRabbit · SonarCloud | AI bot for PR review | Line-by-line diff comments | On every PR |
+| **best-practices skills** | LLM consultation against a curated knowledge base | Narrative findings + roadmap + tooling recommendations | On demand, exploratory |
+| *Effective Java* · *Clean Code* · *Idiomatic Go* | Reference book | Text the dev reads | Onboarding, critical reading |
+
+This repo does not compete with static analyzers — it tells you which ones to wire up. It does not compete with PR bots — it works on whole codebases, not diffs. It does not replace books — it points to them.
 
 ---
 
@@ -46,6 +66,52 @@ A curated knowledge base of software engineering best practices. Organized by en
 | [`.skills/`](.skills/) | 10 Claude Code skills with automatic domain detection (backend/frontend/data/AI). Each skill reads the appropriate reference files based on the code being reviewed. |
 
 Available skills: `secure-review`, `principles-review`, `observability-review`, `configuration-review`, `testing-review`, `ci-cd-review`, `iac-review`, `contract-design-review`, `system-design-review`, `data-design-review`.
+
+---
+
+## About the skills
+
+What to expect when you invoke a skill.
+
+- **Consultative, not prescriptive.** Output is a starting point for conversation, not a verdict. The skill says "consider X, here's why" — you decide what to do.
+- **Auto-domain detection.** Skills inspect imports and file patterns to figure out whether you're in backend, frontend, data, or AI code, and read the right slice of the knowledge base accordingly.
+- **Defined scope.** Each skill is bounded. `principles-review` evaluates *how* code is written, not *what* exists; it cannot tell you what to build next. Combining skills covers more ground than asking one skill to do everything.
+
+Skills fall into three categories by what they can observe (a planned rename — tracked in a separate issue — will surface this in the names themselves):
+
+- **Coverage-type** (additive topics): observe what's present vs absent. Output: *"you're missing X, add Y"*. E.g. observability gaps, testing gaps.
+- **Review-type** (qualitative topics): observe what exists and rate it against principles. Output: *"what you have violates Z"*. E.g. principles, secure coding patterns.
+- **Assess-type** (hybrid topics): both — what's missing, and what exists is good or bad. E.g. system design, data design.
+
+## Reproducibility — what to expect, what to do
+
+> **Skill output is non-deterministic.** Skills are powered by LLMs. Same skill + same code + same prompt can produce slightly different findings between runs. This is a feature (the skill adapts to context) and a limitation (you cannot diff outputs to detect regressions like you would with `ruff` or `gosec`).
+>
+> **Implications:**
+> - Use static analyzers (recommended in the topic READMEs) for reproducible CI gates.
+> - Use these skills for exploration, onboarding, gap analysis, and architectural conversations — not for automated quality enforcement.
+
+### What to do if you need determinism
+
+Don't invoke skills in CI. Pair them with deterministic tools instead:
+
+1. Invoke the skill **once** locally to get a review.
+2. Ask the skill to **generate a scanning script** with the tools it recommends for your stack (every skill offers this in its `What I Can Generate` section).
+3. Use the **script** in CI. The script is deterministic. The skill is exploratory.
+
+| Use case | What to use |
+|---|---|
+| Exploration, onboarding, gap analysis, architecture conversations | Skill |
+| Pre-merge gate, CI, compliance audit | Generated script (with tools the skill picked for your stack) |
+| Continuous dashboard | Skill output to seed the dashboard; scripts to keep it updated |
+
+Skills also fall into three categories by how much of their scope can be delegated to deterministic tools:
+
+- **Tool-backed**: a deterministic tool fully covers the skill's scope (`iac-review`, `configuration-review`).
+- **Hybrid**: some aspects deterministic, others LLM judgment (`secure-review`, `testing-review`).
+- **LLM-pure**: no deterministic counterpart exists; non-determinism is the feature (`principles-review`).
+
+A dedicated structural treatment of this (categorization in skill frontmatter, scanning script structure) is tracked separately.
 
 ---
 
