@@ -1,6 +1,6 @@
 ---
-name: principles-review
-description: Review code for software design principles and best practices. Use when the user asks to review code quality, check design principles, assess maintainability, evaluate testability, or identify code smells. Triggers on requests like "review code quality", "check principles", "is this well designed", "review for maintainability", or "/principles-review".
+name: assess-coding-principles
+description: Review code for software design principles and best practices. Use when the user asks to review code quality, check design principles, assess maintainability, evaluate testability, or identify code smells. Triggers on requests like "review code quality", "check principles", "is this well designed", "review for maintainability", or "/assess-coding-principles".
 ---
 
 # Software Principles Review

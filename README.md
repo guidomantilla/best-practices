@@ -65,7 +65,7 @@ This repo does not compete with static analyzers — it tells you which ones to 
 |---|---|
 | [`.skills/`](.skills/) | 10 Claude Code skills with automatic domain detection (backend/frontend/data/AI). Each skill reads the appropriate reference files based on the code being reviewed. |
 
-Available skills: `secure-review`, `principles-review`, `observability-review`, `configuration-review`, `testing-review`, `ci-cd-review`, `iac-review`, `contract-design-review`, `system-design-review`, `data-design-review`.
+Available skills: `assess-secure-coding`, `assess-coding-principles`, `assess-observability`, `assess-configuration`, `assess-testing`, `assess-ci-cd`, `assess-iac`, `assess-contract-design`, `assess-system-design`, `assess-data-design`. Plus `overview` for in-session discovery.
 
 ---
 
@@ -75,13 +75,8 @@ What to expect when you invoke a skill.
 
 - **Consultative, not prescriptive.** Output is a starting point for conversation, not a verdict. The skill says "consider X, here's why" — you decide what to do.
 - **Auto-domain detection.** Skills inspect imports and file patterns to figure out whether you're in backend, frontend, data, or AI code, and read the right slice of the knowledge base accordingly.
-- **Defined scope.** Each skill is bounded. `principles-review` evaluates *how* code is written, not *what* exists; it cannot tell you what to build next. Combining skills covers more ground than asking one skill to do everything.
-
-Skills fall into three categories by what they can observe (a planned rename — tracked in a separate issue — will surface this in the names themselves):
-
-- **Coverage-type** (additive topics): observe what's present vs absent. Output: *"you're missing X, add Y"*. E.g. observability gaps, testing gaps.
-- **Review-type** (qualitative topics): observe what exists and rate it against principles. Output: *"what you have violates Z"*. E.g. principles, secure coding patterns.
-- **Assess-type** (hybrid topics): both — what's missing, and what exists is good or bad. E.g. system design, data design.
+- **Defined scope.** Each skill is bounded. `assess-coding-principles` evaluates *how* code is written, not *what* exists; it cannot tell you what to build next. Combining skills covers more ground than asking one skill to do everything.
+- **Predictable naming.** Every skill is `assess-<domain>` (e.g. `assess-secure-coding`, `assess-iac`). Once you know the pattern, the slash for any topic is guessable. The `overview` skill is the one exception — it's a discovery entrypoint, not an assessment.
 
 ## Reproducibility — what to expect, what to do
 
@@ -107,9 +102,9 @@ Don't invoke skills in CI. Pair them with deterministic tools instead:
 
 Skills also fall into three categories by how much of their scope can be delegated to deterministic tools:
 
-- **Tool-backed**: a deterministic tool fully covers the skill's scope (`iac-review`, `configuration-review`).
-- **Hybrid**: some aspects deterministic, others LLM judgment (`secure-review`, `testing-review`).
-- **LLM-pure**: no deterministic counterpart exists; non-determinism is the feature (`principles-review`).
+- **Tool-backed**: a deterministic tool fully covers the skill's scope (`assess-iac`, `assess-configuration`).
+- **Hybrid**: some aspects deterministic, others LLM judgment (`assess-secure-coding`, `assess-testing`).
+- **LLM-pure**: no deterministic counterpart exists; non-determinism is the feature (`assess-coding-principles`).
 
 A dedicated structural treatment of this (categorization in skill frontmatter, scanning script structure) is tracked separately.
 
@@ -157,7 +152,7 @@ make install-copilot TARGET=~/projects/my-app       # GitHub Copilot
 make install-cursor TARGET=~/projects/my-app        # Cursor
 
 # Install only specific skills
-make install-claude TARGET=~/projects/my-app SKILLS='secure-review testing-review'
+make install-claude TARGET=~/projects/my-app SKILLS='assess-secure-coding assess-testing'
 
 # Roll back an install
 make uninstall-claude TARGET=~/projects/my-app
@@ -179,11 +174,11 @@ or, in natural language:
 ```
 what best-practices skills do I have here?
 ```
-Claude responds with a catalog of the 10 review skills, what each one covers, and when to use it.
+Claude responds with a catalog of the 10 assessment skills, what each one covers, and when to use it.
 
-**2. Run a focused review**
+**2. Run a focused assessment**
 ```
-/secure-review src/api/
+/assess-secure-coding src/api/
 ```
 Claude reads the code under `src/api/`, reports concrete vulnerabilities with file:line citations, and references the relevant section of `backend-engineering/secure-coding/` for the rationale.
 
@@ -191,7 +186,7 @@ Claude reads the code under `src/api/`, reports concrete vulnerabilities with fi
 ```
 review the testing strategy for this service — are there gaps?
 ```
-Claude auto-invokes `testing-review`, walks the test pyramid, flags missing levels, and proposes the highest-value tests to add first.
+Claude auto-invokes `assess-testing`, walks the test pyramid, flags missing levels, and proposes the highest-value tests to add first.
 
 In Cursor and Copilot, the same content is loaded as rules / instructions — invoke by asking the assistant directly (slash commands are Claude-Code-specific).
 

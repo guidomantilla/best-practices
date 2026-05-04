@@ -1,6 +1,6 @@
 ---
-name: configuration-review
-description: Review code for configuration management issues — scattered env var reads, missing validation, hardcoded secrets, stale feature flags, and environment anti-patterns. Use when the user asks to review configuration practices, check secret handling, assess feature flag hygiene, or validate config structure. Triggers on requests like "review configuration", "check my config", "are secrets handled correctly", "review feature flags", or "/configuration-review".
+name: assess-configuration
+description: Review code for configuration management issues — scattered env var reads, missing validation, hardcoded secrets, stale feature flags, and environment anti-patterns. Use when the user asks to review configuration practices, check secret handling, assess feature flag hygiene, or validate config structure. Triggers on requests like "review configuration", "check my config", "are secrets handled correctly", "review feature flags", or "/assess-configuration".
 ---
 
 # Configuration Review

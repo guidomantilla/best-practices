@@ -16,7 +16,7 @@ help: ## Show available commands
 	@echo "  make install-claude TARGET=~/projects/my-app"
 	@echo "  make install-copilot TARGET=~/projects/my-app"
 	@echo "  make install-cursor TARGET=~/projects/my-app"
-	@echo "  make install-claude TARGET=~/projects/my-app SKILLS='secure-review testing-review'"
+	@echo "  make install-claude TARGET=~/projects/my-app SKILLS='assess-secure-coding assess-testing'"
 	@echo "  make uninstall-claude TARGET=~/projects/my-app"
 	@echo "  make uninstall-all TARGET=~/projects/my-app"
 

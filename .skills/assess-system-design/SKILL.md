@@ -1,6 +1,6 @@
 ---
-name: system-design-review
-description: Review system architecture for design issues, wrong patterns, scalability gaps, and resilience weaknesses. Use when the user asks to review architecture, assess system design decisions, evaluate scalability, check resilience patterns, or validate integration patterns. Triggers on requests like "review my architecture", "is this system design sound", "check scalability", "review my microservices", or "/system-design-review".
+name: assess-system-design
+description: Review system architecture for design issues, wrong patterns, scalability gaps, and resilience weaknesses. Use when the user asks to review architecture, assess system design decisions, evaluate scalability, check resilience patterns, or validate integration patterns. Triggers on requests like "review my architecture", "is this system design sound", "check scalability", "review my microservices", or "/assess-system-design".
 ---
 
 # System Design Review

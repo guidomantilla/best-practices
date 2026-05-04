@@ -1,6 +1,6 @@
 ---
-name: testing-review
-description: Review a project's testing strategy and test code for gaps, anti-patterns, and improvement opportunities. Use when the user asks to review test coverage strategy, assess test quality, check for flaky tests, evaluate test architecture, or identify missing test levels. Triggers on requests like "review my tests", "is my testing strategy solid", "check test quality", "are there testing gaps", or "/testing-review".
+name: assess-testing
+description: Review a project's testing strategy and test code for gaps, anti-patterns, and improvement opportunities. Use when the user asks to review test coverage strategy, assess test quality, check for flaky tests, evaluate test architecture, or identify missing test levels. Triggers on requests like "review my tests", "is my testing strategy solid", "check test quality", "are there testing gaps", or "/assess-testing".
 ---
 
 # Testing Strategy Review

@@ -1,6 +1,6 @@
 ---
-name: ci-cd-review
-description: Review a project's CI/CD pipeline for gaps, anti-patterns, and improvement opportunities. Use when the user asks to review pipeline design, check deployment strategy, assess build reliability, evaluate rollback capabilities, or identify CI/CD bottlenecks. Triggers on requests like "review my pipeline", "is my CI/CD solid", "check deployment strategy", "review my GitHub Actions", or "/ci-cd-review".
+name: assess-ci-cd
+description: Review a project's CI/CD pipeline for gaps, anti-patterns, and improvement opportunities. Use when the user asks to review pipeline design, check deployment strategy, assess build reliability, evaluate rollback capabilities, or identify CI/CD bottlenecks. Triggers on requests like "review my pipeline", "is my CI/CD solid", "check deployment strategy", "review my GitHub Actions", or "/assess-ci-cd".
 ---
 
 # CI/CD Pipeline Review

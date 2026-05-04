@@ -1,6 +1,6 @@
 ---
-name: secure-review
-description: Review code for security vulnerabilities, data privacy compliance, and secure coding best practices. Use when the user asks to review code for security issues, check compliance with HIPAA/GLBA/CCPA/GDPR/LGPD/PCI-DSS, audit data handling, or validate secure coding patterns. Triggers on requests like "security review", "check for vulnerabilities", "is this HIPAA compliant", "review this for security", or "/secure-review".
+name: assess-secure-coding
+description: Review code for security vulnerabilities, data privacy compliance, and secure coding best practices. Use when the user asks to review code for security issues, check compliance with HIPAA/GLBA/CCPA/GDPR/LGPD/PCI-DSS, audit data handling, or validate secure coding patterns. Triggers on requests like "security review", "check for vulnerabilities", "is this HIPAA compliant", "review this for security", or "/assess-secure-coding".
 ---
 
 # Secure Code Review

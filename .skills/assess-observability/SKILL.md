@@ -1,6 +1,6 @@
 ---
-name: observability-review
-description: Review code for observability gaps — missing instrumentation, poor logging practices, metric anti-patterns, and tracing issues. Use when the user asks to review instrumentation, check logging practices, assess observability coverage, or validate metric/tracing patterns. Triggers on requests like "review observability", "check my logging", "is this well instrumented", "review tracing", or "/observability-review".
+name: assess-observability
+description: Review code for observability gaps — missing instrumentation, poor logging practices, metric anti-patterns, and tracing issues. Use when the user asks to review instrumentation, check logging practices, assess observability coverage, or validate metric/tracing patterns. Triggers on requests like "review observability", "check my logging", "is this well instrumented", "review tracing", or "/assess-observability".
 ---
 
 # Observability Review

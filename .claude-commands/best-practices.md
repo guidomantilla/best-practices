@@ -1,5 +1,5 @@
 ---
-description: Show the catalog of best-practices review skills installed in this project.
+description: Show the catalog of best-practices assessment skills installed in this project.
 ---
 
 Invoke the `overview` skill and present its full output. Do not summarize — show every row of the skills table so the user has the complete catalog.

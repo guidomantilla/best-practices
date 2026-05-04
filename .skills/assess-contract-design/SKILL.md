@@ -1,6 +1,6 @@
 ---
-name: contract-design-review
-description: Review API and communication contracts for design issues, anti-patterns, and consistency. Use when the user asks to review REST API design, gRPC protos, GraphQL schemas, WebSocket message formats, event schemas, or webhook implementations. Triggers on requests like "review my API", "check my proto", "is my GraphQL schema well designed", "review my event schema", or "/contract-design-review".
+name: assess-contract-design
+description: Review API and communication contracts for design issues, anti-patterns, and consistency. Use when the user asks to review REST API design, gRPC protos, GraphQL schemas, WebSocket message formats, event schemas, or webhook implementations. Triggers on requests like "review my API", "check my proto", "is my GraphQL schema well designed", "review my event schema", or "/assess-contract-design".
 ---
 
 # Contract Design Review

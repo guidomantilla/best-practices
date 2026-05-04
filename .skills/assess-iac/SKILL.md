@@ -1,6 +1,6 @@
 ---
-name: iac-review
-description: Review infrastructure as code and Dockerfiles for misconfigurations, security gaps, and best practice violations. Use when the user asks to review Terraform, Pulumi, CloudFormation, Kubernetes manifests, Helm charts, or Dockerfiles. Triggers on requests like "review my Terraform", "check my Dockerfile", "is my K8s config secure", "review infrastructure code", or "/iac-review".
+name: assess-iac
+description: Review infrastructure as code and Dockerfiles for misconfigurations, security gaps, and best practice violations. Use when the user asks to review Terraform, Pulumi, CloudFormation, Kubernetes manifests, Helm charts, or Dockerfiles. Triggers on requests like "review my Terraform", "check my Dockerfile", "is my K8s config secure", "review infrastructure code", or "/assess-iac".
 ---
 
 # IaC & Container Review
