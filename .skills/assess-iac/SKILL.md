@@ -1,6 +1,7 @@
 ---
 name: assess-iac
 description: Review infrastructure as code and Dockerfiles for misconfigurations, security gaps, and best practice violations. Use when the user asks to review Terraform, Pulumi, CloudFormation, Kubernetes manifests, Helm charts, or Dockerfiles. Triggers on requests like "review my Terraform", "check my Dockerfile", "is my K8s config secure", "review infrastructure code", or "/assess-iac".
+category: tool-backed
 ---
 
 # IaC & Container Review
@@ -156,7 +157,11 @@ After the summary, list which additional deliverables are applicable:
 ## What I Can Generate
 
 Based on this review, I can also:
-- [ ] Generate a Checkov/Trivy scanning config for CI integration
+
+### For reproducibility (deterministic, CI-ready)
+- [ ] **Generate a CI scanning workflow** (Checkov + Trivy + tfsec) wiring the IaC checks above into every commit. This is the deterministic counterpart — use it in CI instead of invoking the skill.
+
+### For deeper exploration (LLM, non-deterministic)
 - [ ] Create a hardened Dockerfile (multi-stage, non-root, minimal base)
 - [ ] Generate K8s Pod Security Standards (restricted) manifests
 - [ ] Create IAM policies scoped to minimum required permissions
@@ -165,9 +170,6 @@ Based on this review, I can also:
 - [ ] Create a .dockerignore for this project
 
 Select which ones you'd like me to generate.
-```
-
-Only list capabilities that are relevant to the findings and context.
 
 ## What NOT to Do
 

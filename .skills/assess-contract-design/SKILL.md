@@ -1,6 +1,7 @@
 ---
 name: assess-contract-design
 description: Review API and communication contracts for design issues, anti-patterns, and consistency. Use when the user asks to review REST API design, gRPC protos, GraphQL schemas, WebSocket message formats, event schemas, or webhook implementations. Triggers on requests like "review my API", "check my proto", "is my GraphQL schema well designed", "review my event schema", or "/assess-contract-design".
+category: hybrid
 ---
 
 # Contract Design Review
@@ -117,6 +118,11 @@ After the summary, list which additional deliverables are applicable:
 ## What I Can Generate
 
 Based on this review, I can also:
+
+### For reproducibility (deterministic, CI-ready)
+- [ ] **Generate a contract-validation workflow** for CI: Spectral (OpenAPI), buf (proto), graphql-eslint (GraphQL), AsyncAPI validators. Catches breaking changes and lint violations on every PR.
+
+### For deeper exploration (LLM, non-deterministic)
 - [ ] Generate an OpenAPI/AsyncAPI/proto spec from the existing code
 - [ ] Detect breaking changes between two versions of the contract
 - [ ] Propose a versioning and deprecation strategy
@@ -127,9 +133,6 @@ Based on this review, I can also:
 - [ ] Propose topic/queue naming conventions
 
 Select which ones you'd like me to generate.
-```
-
-Only list capabilities that are relevant to the findings and context.
 
 ## What NOT to Do
 

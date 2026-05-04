@@ -1,6 +1,7 @@
 ---
 name: assess-configuration
 description: Review code for configuration management issues — scattered env var reads, missing validation, hardcoded secrets, stale feature flags, and environment anti-patterns. Use when the user asks to review configuration practices, check secret handling, assess feature flag hygiene, or validate config structure. Triggers on requests like "review configuration", "check my config", "are secrets handled correctly", "review feature flags", or "/assess-configuration".
+category: tool-backed
 ---
 
 # Configuration Review
@@ -167,6 +168,11 @@ After the summary, list which additional deliverables are applicable:
 ## What I Can Generate
 
 Based on this review, I can also:
+
+### For reproducibility (deterministic, CI-ready)
+- [ ] **Generate a configuration validation script** for CI (typed schema validation + pre-commit secret detection). Catches drift and leaked credentials deterministically.
+
+### For deeper exploration (LLM, non-deterministic)
 - [ ] Generate a config module scaffold (typed struct + validation + fail-fast startup)
 - [ ] Create a .envrc.example documenting all required configuration
 - [ ] Identify all env vars the service needs (audit scattered reads)
@@ -175,9 +181,6 @@ Based on this review, I can also:
 - [ ] Design a config precedence diagram for this service
 
 Select which ones you'd like me to generate.
-```
-
-Only list capabilities that are relevant to the findings and context.
 
 ## What NOT to Do
 

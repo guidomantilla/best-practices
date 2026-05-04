@@ -1,6 +1,7 @@
 ---
 name: assess-ci-cd
 description: Review a project's CI/CD pipeline for gaps, anti-patterns, and improvement opportunities. Use when the user asks to review pipeline design, check deployment strategy, assess build reliability, evaluate rollback capabilities, or identify CI/CD bottlenecks. Triggers on requests like "review my pipeline", "is my CI/CD solid", "check deployment strategy", "review my GitHub Actions", or "/assess-ci-cd".
+category: hybrid
 ---
 
 # CI/CD Pipeline Review
@@ -167,6 +168,11 @@ After the summary, list which additional deliverables are applicable:
 ## What I Can Generate
 
 Based on this review, I can also:
+
+### For reproducibility (deterministic, CI-ready)
+- [ ] **Generate a pipeline-linting workflow** that lints the pipeline definitions themselves (so the pipeline doesn't drift) on every PR. Deterministic — runs alongside the pipeline, not invoked manually.
+
+### For deeper exploration (LLM, non-deterministic)
 - [ ] Design a pipeline from scratch for this tech type and deployment target
 - [ ] Add caching to reduce build time
 - [ ] Implement a canary/blue-green deployment strategy
@@ -177,9 +183,6 @@ Based on this review, I can also:
 - [ ] Generate DORA metrics tracking setup
 
 Select which ones you'd like me to generate.
-```
-
-Only list capabilities that are relevant to the findings and context.
 
 ## What NOT to Do
 

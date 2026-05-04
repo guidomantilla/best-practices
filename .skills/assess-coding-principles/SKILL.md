@@ -1,6 +1,7 @@
 ---
 name: assess-coding-principles
 description: Review code for software design principles and best practices. Use when the user asks to review code quality, check design principles, assess maintainability, evaluate testability, or identify code smells. Triggers on requests like "review code quality", "check principles", "is this well designed", "review for maintainability", or "/assess-coding-principles".
+category: LLM-pure
 ---
 
 # Software Principles Review
@@ -150,17 +151,18 @@ After the summary, list which additional deliverables are applicable based on fi
 ## What I Can Generate
 
 Based on this review, I can also:
+
+### For reproducibility (deterministic, CI-ready)
+- [ ] **Generate a complexity-and-structure CI report** (cyclomatic complexity, function length, dependency cycles, coupling metrics). Partial determinism — flags structural smells; design judgment still needs the skill.
+
+### For deeper exploration (LLM, non-deterministic)
 - [ ] Show refactoring (before/after code) for each finding
 - [ ] Propose a progressive refactoring plan (ordered by impact, minimal disruption)
 - [ ] Evaluate testability and suggest how to make the code testable
 - [ ] Identify the dependency graph and suggest decoupling points
-- [ ] Generate a complexity report script for CI integration
 - [ ] Suggest architectural boundaries for this codebase
 
 Select which ones you'd like me to generate.
-```
-
-Only list capabilities that are relevant to the findings and context. Don't list all every time.
 
 ## What NOT to Do
 

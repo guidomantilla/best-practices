@@ -1,6 +1,7 @@
 ---
 name: assess-observability
 description: Review code for observability gaps — missing instrumentation, poor logging practices, metric anti-patterns, and tracing issues. Use when the user asks to review instrumentation, check logging practices, assess observability coverage, or validate metric/tracing patterns. Triggers on requests like "review observability", "check my logging", "is this well instrumented", "review tracing", or "/assess-observability".
+category: hybrid
 ---
 
 # Observability Review
@@ -140,6 +141,11 @@ After the summary, list which additional deliverables are applicable:
 ## What I Can Generate
 
 Based on this review, I can also:
+
+### For reproducibility (deterministic, CI-ready)
+- [ ] **Generate a CI check** that detects handlers/endpoints lacking OpenTelemetry instrumentation, structured logging, or a metric. Fails the build when new code skips instrumentation.
+
+### For deeper exploration (LLM, non-deterministic)
 - [ ] Generate an instrumentation scaffold (OTel setup + middleware) for this service
 - [ ] Create a structured logging standard (field names, levels, format) for this project
 - [ ] Define RED metrics for each detected endpoint
@@ -150,9 +156,6 @@ Based on this review, I can also:
 - [ ] Estimate observability cost and suggest optimizations
 
 Select which ones you'd like me to generate.
-```
-
-Only list capabilities that are relevant to the findings and context.
 
 ## What NOT to Do
 

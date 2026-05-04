@@ -130,13 +130,26 @@ Don't invoke skills in CI. Pair them with deterministic tools instead:
 | Pre-merge gate, CI, compliance audit | Generated script (with tools the skill picked for your stack) |
 | Continuous dashboard | Skill output to seed the dashboard; scripts to keep it updated |
 
-Skills also fall into three categories by how much of their scope can be delegated to deterministic tools:
+Skills fall into three categories by how much of their scope can be delegated to deterministic tools. The category lives in each skill's frontmatter (`category:`) and shows up in the table below.
 
-- **Tool-backed**: a deterministic tool fully covers the skill's scope (`assess-iac`, `assess-configuration`).
-- **Hybrid**: some aspects deterministic, others LLM judgment (`assess-secure-coding`, `assess-testing`).
-- **LLM-pure**: no deterministic counterpart exists; non-determinism is the feature (`assess-coding-principles`).
+- **Tool-backed**: a deterministic tool fully covers the skill's scope. Treat the skill as a one-time advisor, then run the script in CI.
+- **Hybrid**: some aspects deterministic, others LLM judgment. Use the script in CI for the deterministic part; keep invoking the skill for the rest.
+- **LLM-pure**: no deterministic counterpart exists; non-determinism is the feature. Don't try to put this in CI — its value is the conversation.
 
-A dedicated structural treatment of this (categorization in skill frontmatter, scanning script structure) is tracked separately.
+| Skill | Category | Deterministic counterpart |
+|---|---|---|
+| `assess-iac` | tool-backed | Checkov + Trivy + tfsec scan workflow |
+| `assess-configuration` | tool-backed | Schema validation + secret-detection script |
+| `assess-secure-coding` | hybrid | `security-scan.sh` (semgrep / bandit / gosec / etc.) |
+| `assess-testing` | hybrid | CI workflow with coverage thresholds + flake detection |
+| `assess-observability` | hybrid | CI check that flags handlers without instrumentation |
+| `assess-data-design` | hybrid | SQL/schema lint + slow-query (EXPLAIN) regression check |
+| `assess-ci-cd` | hybrid | Pipeline-files lint workflow |
+| `assess-contract-design` | hybrid | Spectral / buf / graphql-eslint validation in CI |
+| `assess-coding-principles` | LLM-pure | Complexity report (partial — flags structural smells only) |
+| `assess-system-design` | LLM-pure | Fitness functions (architecture tests) — see [`well-architected/fitness-functions.md`](well-architected/fitness-functions.md) |
+
+The deterministic counterpart for each skill is the **first** offer in that skill's `What I Can Generate` section.
 
 ---
 

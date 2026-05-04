@@ -1,6 +1,7 @@
 ---
 name: assess-secure-coding
 description: Review code for security vulnerabilities, data privacy compliance, and secure coding best practices. Use when the user asks to review code for security issues, check compliance with HIPAA/GLBA/CCPA/GDPR/LGPD/PCI-DSS, audit data handling, or validate secure coding patterns. Triggers on requests like "security review", "check for vulnerabilities", "is this HIPAA compliant", "review this for security", or "/assess-secure-coding".
+category: hybrid
 ---
 
 # Secure Code Review
@@ -178,6 +179,11 @@ After the summary, list which additional deliverables are applicable to this pro
 ## What I Can Generate
 
 Based on this review, I can also:
+
+### For reproducibility (deterministic, CI-ready)
+- [ ] **Generate a security scanning script (`security-scan.sh`)** wiring the static analyzers above for [detected languages] (semgrep / bandit / gosec / etc.). Use this in CI as the deterministic counterpart to the skill's exploration.
+
+### For deeper exploration (LLM, non-deterministic)
 - [ ] Show anti-patterns (vulnerable code vs secure code) for each finding
 - [ ] Generate a threat model for this project
 - [ ] Create an incident response plan template
@@ -185,12 +191,8 @@ Based on this review, I can also:
 - [ ] Detail architecture-specific risks for [detected pattern]
 - [ ] Provide jurisdiction-specific legal details for [detected regions]
 - [ ] Generate breach notification timelines for applicable regulations
-- [ ] Create a scanning script (security-scan.sh) with tools for [detected languages]
 
 Select which ones you'd like me to generate.
-```
-
-Only list capabilities that are relevant to the findings and context. Don't list all 8 every time.
 
 ## What NOT to do
 

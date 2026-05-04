@@ -1,6 +1,7 @@
 ---
 name: assess-system-design
 description: Review system architecture for design issues, wrong patterns, scalability gaps, and resilience weaknesses. Use when the user asks to review architecture, assess system design decisions, evaluate scalability, check resilience patterns, or validate integration patterns. Triggers on requests like "review my architecture", "is this system design sound", "check scalability", "review my microservices", or "/assess-system-design".
+category: LLM-pure
 ---
 
 # System Design Review
@@ -116,6 +117,11 @@ After the summary, list which additional deliverables are applicable:
 ## What I Can Generate
 
 Based on this review, I can also:
+
+### For reproducibility (deterministic, CI-ready)
+- [ ] **Generate fitness functions** — automated tests that codify the architectural decisions in this review (allowed dependency directions, boundary checks, coupling thresholds, layering rules). The deterministic counterpart for architecture decisions. See `well-architected/fitness-functions.md` for patterns.
+
+### For deeper exploration (LLM, non-deterministic)
 - [ ] Propose a target architecture with migration path
 - [ ] Design service boundaries based on detected domain
 - [ ] Create a resilience strategy (circuit breakers, fallbacks, timeouts)
@@ -126,9 +132,6 @@ Based on this review, I can also:
 - [ ] Evaluate event-driven vs synchronous for detected communication patterns
 
 Select which ones you'd like me to generate.
-```
-
-Only list capabilities that are relevant to the findings and context.
 
 ## What NOT to Do
 

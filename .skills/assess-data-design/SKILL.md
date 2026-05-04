@@ -1,6 +1,7 @@
 ---
 name: assess-data-design
 description: Review data layer code for schema issues, query anti-patterns, connection mismanagement, caching problems, and data lifecycle gaps. Use when the user asks to review database code, check query performance, assess schema design, review caching strategy, or validate data access patterns. Triggers on requests like "review my database code", "check my queries", "is my schema well designed", "review caching", or "/assess-data-design".
+category: hybrid
 ---
 
 # Data Design Review
@@ -196,6 +197,11 @@ After the summary, list which additional deliverables are applicable:
 ## What I Can Generate
 
 Based on this review, I can also:
+
+### For reproducibility (deterministic, CI-ready)
+- [ ] **Generate a CI workflow** for SQL/schema linting and slow-query detection (EXPLAIN regression checks against the recommended index plan). Deterministic counterpart to the structural review.
+
+### For deeper exploration (LLM, non-deterministic)
 - [ ] Optimize detected slow queries (with EXPLAIN analysis)
 - [ ] Design indexes for the detected query patterns
 - [ ] Generate a connection pool configuration for this stack
@@ -206,9 +212,6 @@ Based on this review, I can also:
 - [ ] Design pagination for detected list endpoints
 
 Select which ones you'd like me to generate.
-```
-
-Only list capabilities that are relevant to the findings and context.
 
 ## What NOT to Do
 

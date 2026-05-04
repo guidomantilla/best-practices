@@ -1,6 +1,7 @@
 ---
 name: assess-testing
 description: Review a project's testing strategy and test code for gaps, anti-patterns, and improvement opportunities. Use when the user asks to review test coverage strategy, assess test quality, check for flaky tests, evaluate test architecture, or identify missing test levels. Triggers on requests like "review my tests", "is my testing strategy solid", "check test quality", "are there testing gaps", or "/assess-testing".
+category: hybrid
 ---
 
 # Testing Strategy Review
@@ -200,6 +201,11 @@ After the summary, list which additional deliverables are applicable:
 ## What I Can Generate
 
 Based on this review, I can also:
+
+### For reproducibility (deterministic, CI-ready)
+- [ ] **Generate a CI workflow** that runs tests with coverage thresholds and flake-detection rules (quarantine + retry policy from §10). Deterministic — this is what you want as the pre-merge gate.
+
+### For deeper exploration (LLM, non-deterministic)
 - [ ] Propose a testing strategy for the critical paths identified
 - [ ] Generate integration test scaffolds using testcontainers for detected dependencies
 - [ ] Generate API test suite (Hurl/Playwright) for detected endpoints
@@ -211,9 +217,6 @@ Based on this review, I can also:
 - [ ] Recommend test ownership model based on detected team structure
 
 Select which ones you'd like me to generate.
-```
-
-Only list capabilities that are relevant to the findings and context.
 
 ## What NOT to Do
 
