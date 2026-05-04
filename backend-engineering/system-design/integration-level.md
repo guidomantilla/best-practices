@@ -377,7 +377,7 @@ Service C → Authz Service → decision
 - **Consistency**: when permissions change, how fast does it propagate?
 - **Ownership**: who maintains the authorization model? Platform team? Each service team?
 
-See `../application-level.md` §8 (Authorization as Architecture) for the in-service perspective.
+See `./application-level.md` §8 (Authorization as Architecture) for the in-service perspective.
 
 ---
 

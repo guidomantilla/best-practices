@@ -141,7 +141,7 @@ For the full well-architected framework, see [`../../well-architected/`](../../w
 - **Never store sensitive data in localStorage/sessionStorage** — accessible to any JS on the page (XSS = full access)
 - **Auth tokens in HttpOnly cookies** — not accessible to JS, sent automatically with requests
 - **Encrypt locally stored data** if it contains anything user-specific
-- See [`../backend-engineering/secure-coding/`](../backend-engineering/secure-coding/README.md) §5.4 for data protection details
+- See [`../../backend-engineering/secure-coding/`](../../backend-engineering/secure-coding/README.md) §5.4 for data protection details
 
 ### Anti-patterns
 - JWT in localStorage (XSS = token stolen)

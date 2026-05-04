@@ -38,7 +38,7 @@ These topics apply identically to frontend. Read from `backend-engineering/`:
 Only relevant for SSR deployments (Next.js, Nuxt in containers). For Dockerfile and K8s patterns, see [`../backend-engineering/iac/`](../backend-engineering/iac/README.md). For static sites deployed to CDN, IaC is typically the CDN configuration (Cloudflare, CloudFront) managed by platform/infra teams.
 
 ### Data Design
-Not applicable — frontend doesn't manage data stores. Client-side storage (localStorage, IndexedDB) is covered in [system-design.md](system-design.md).
+Not applicable — frontend doesn't manage data stores. Client-side storage (localStorage, IndexedDB) is covered in [`system-design/`](system-design/README.md).
 
 ---
 

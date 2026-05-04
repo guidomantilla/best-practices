@@ -105,7 +105,7 @@ Multiple independently deployable services, each owning a bounded context.
 - **Chatty services**: 50 inter-service calls per user request (latency, fragility)
 - **Nano-services**: too granular (one function per service — operational overhead per function)
 - **Wrong boundaries**: frequent cross-service changes indicate wrong decomposition
-- **No service-to-service auth** (zero trust): internal services call each other without authentication — compromising one service = access to all. See `../integration-level.md` §13 (Service Mesh) and `../../zero-trust/identity.md` (Service Identity).
+- **No service-to-service auth** (zero trust): internal services call each other without authentication — compromising one service = access to all. See `./integration-level.md` §13 (Service Mesh) and `../../zero-trust/identity.md` (Service Identity).
 
 ### Shared Services in Microservices (Zero Trust perspective)
 

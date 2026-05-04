@@ -1,6 +1,6 @@
 # Frontend-Specific Testing
 
-Additions to the general testing practices for frontend. For the full testing reference (test pyramid, unit, integration, API, E2E, contract, performance, flaky tests), see [`../backend-engineering/testing/`](../backend-engineering/testing/README.md).
+Additions to the general testing practices for frontend. For the full testing reference (test pyramid, unit, integration, API, E2E, contract, performance, flaky tests), see [`../../backend-engineering/testing/`](../../backend-engineering/testing/README.md).
 
 This file covers what's **different or additional** for frontend.
 
@@ -124,7 +124,7 @@ Lint (eslint-plugin-jsx-a11y) → Component tests (axe-core) → E2E (axe + Play
 
 ## 4. Frontend E2E — Additional Considerations
 
-The general E2E practices in [`../backend-engineering/testing/`](../backend-engineering/testing/README.md) apply. These are frontend-specific additions:
+The general E2E practices in [`../../backend-engineering/testing/`](../../backend-engineering/testing/README.md) apply. These are frontend-specific additions:
 
 ### Selectors
 - **Prefer**: `getByRole`, `getByLabel`, `getByText` (user-centric, accessible)

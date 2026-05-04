@@ -2,7 +2,7 @@
 
 Client-side observability — what to measure, how to track errors, and how to monitor real user experience.
 
-For server-side observability (tracing, metrics, structured logging), see [`../backend-engineering/observability/`](../backend-engineering/observability/README.md).
+For server-side observability (tracing, metrics, structured logging), see [`../../backend-engineering/observability/`](../../backend-engineering/observability/README.md).
 
 ---
 
@@ -115,7 +115,7 @@ Measure what real users experience, not what synthetic tests show.
 - `console.log` left in production (no one will ever see it)
 - Logging everything client-side (cost explosion, 80% is noise)
 - No structured format (unqueryable blobs of text)
-- Logging PII (violates data privacy, see `../backend-engineering/data-privacy/`)
+- Logging PII (violates data privacy, see `../../backend-engineering/data-privacy/`)
 
 ---
 
