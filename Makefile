@@ -1,5 +1,6 @@
 REPO_URL := https://raw.githubusercontent.com/guidomantilla/best-practices/main
 SKILLS_DIR := .skills
+COMMANDS_DIR := .claude-commands
 
 .PHONY: help install-claude install-copilot install-cursor uninstall-claude uninstall-copilot uninstall-cursor uninstall-all list
 
@@ -46,8 +47,18 @@ install-claude: ## Install skills for Claude Code (TARGET=<repo-path> [SKILLS='s
 			fi; \
 		done; \
 	fi
+	@if [ -d "$(COMMANDS_DIR)" ]; then \
+		mkdir -p "$(TARGET)/.claude/commands"; \
+		for f in $(COMMANDS_DIR)/*.md; do \
+			[ -e "$$f" ] || continue; \
+			cmd=$$(basename "$$f"); \
+			cp "$$f" "$(TARGET)/.claude/commands/$$cmd"; \
+			echo "  ✓ /$${cmd%.md} (slash command)"; \
+		done; \
+	fi
 	@echo ""
 	@echo "Done. Skills installed to $(TARGET)/.claude/skills/"
+	@echo "Slash commands installed to $(TARGET)/.claude/commands/"
 	@echo "Skills reference content from: $(REPO_URL)/"
 
 install-copilot: ## Install skills for GitHub Copilot (TARGET=<repo-path> [SKILLS='skill1 skill2'])
@@ -124,6 +135,16 @@ uninstall-claude: ## Uninstall skills from Claude Code (TARGET=<repo-path> [SKIL
 				echo "  ✓ removed $$skill"; \
 			fi; \
 		done; \
+		if [ -d "$(COMMANDS_DIR)" ]; then \
+			for f in $(COMMANDS_DIR)/*.md; do \
+				[ -e "$$f" ] || continue; \
+				cmd=$$(basename "$$f"); \
+				if [ -f "$(TARGET)/.claude/commands/$$cmd" ]; then \
+					rm -f "$(TARGET)/.claude/commands/$$cmd"; \
+					echo "  ✓ removed /$${cmd%.md} (slash command)"; \
+				fi; \
+			done; \
+		fi; \
 	else \
 		echo "Removing selected skills from $(TARGET)/.claude/skills/"; \
 		for skill in $(SKILLS); do \

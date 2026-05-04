@@ -93,9 +93,41 @@ make install-cursor TARGET=~/projects/my-app        # Cursor
 # Install only specific skills
 make install-claude TARGET=~/projects/my-app SKILLS='secure-review testing-review'
 
+# Roll back an install
+make uninstall-claude TARGET=~/projects/my-app
+make uninstall-all TARGET=~/projects/my-app          # all 3 tools at once
+
 # List available skills
 make list
 ```
+
+### Quick start (after installing)
+
+After `make install-claude`, open Claude Code in your project and try:
+
+**1. Discover what's installed**
+```
+/best-practices
+```
+or, in natural language:
+```
+what best-practices skills do I have here?
+```
+Claude responds with a catalog of the 10 review skills, what each one covers, and when to use it.
+
+**2. Run a focused review**
+```
+/secure-review src/api/
+```
+Claude reads the code under `src/api/`, reports concrete vulnerabilities with file:line citations, and references the relevant section of `backend-engineering/secure-coding/` for the rationale.
+
+**3. Ask in natural language**
+```
+review the testing strategy for this service — are there gaps?
+```
+Claude auto-invokes `testing-review`, walks the test pyramid, flags missing levels, and proposes the highest-value tests to add first.
+
+In Cursor and Copilot, the same content is loaded as rules / instructions — invoke by asking the assistant directly (slash commands are Claude-Code-specific).
 
 ### For a new project
 1. Install skills (see above)
