@@ -63,7 +63,7 @@ install-copilot: ## Install skills for GitHub Copilot (TARGET=<repo-path> [SKILL
 		for dir in $(SKILLS_DIR)/*/; do \
 			skill=$$(basename $$dir); \
 			echo "" >> "$(TARGET)/.github/copilot-instructions.md"; \
-			cat "$$dir/SKILL.md" >> "$(TARGET)/.github/copilot-instructions.md"; \
+			awk 'BEGIN{fm=0} /^---$$/{fm++; next} fm>=2{print}' "$$dir/SKILL.md" >> "$(TARGET)/.github/copilot-instructions.md"; \
 			echo "" >> "$(TARGET)/.github/copilot-instructions.md"; \
 			echo "---" >> "$(TARGET)/.github/copilot-instructions.md"; \
 			echo "  ✓ $$skill"; \
@@ -72,7 +72,7 @@ install-copilot: ## Install skills for GitHub Copilot (TARGET=<repo-path> [SKILL
 		for skill in $(SKILLS); do \
 			if [ -d "$(SKILLS_DIR)/$$skill" ]; then \
 				echo "" >> "$(TARGET)/.github/copilot-instructions.md"; \
-				cat "$(SKILLS_DIR)/$$skill/SKILL.md" >> "$(TARGET)/.github/copilot-instructions.md"; \
+				awk 'BEGIN{fm=0} /^---$$/{fm++; next} fm>=2{print}' "$(SKILLS_DIR)/$$skill/SKILL.md" >> "$(TARGET)/.github/copilot-instructions.md"; \
 				echo "" >> "$(TARGET)/.github/copilot-instructions.md"; \
 				echo "---" >> "$(TARGET)/.github/copilot-instructions.md"; \
 				echo "  ✓ $$skill"; \
