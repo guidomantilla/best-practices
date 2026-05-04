@@ -91,14 +91,16 @@ install-cursor: ## Install skills for Cursor (TARGET=<repo-path> [SKILLS='skill1
 		echo "Installing all skills to $(TARGET)/.cursor/rules/"; \
 		for dir in $(SKILLS_DIR)/*/; do \
 			skill=$$(basename $$dir); \
-			cp "$$dir/SKILL.md" "$(TARGET)/.cursor/rules/$$skill.md"; \
+			desc=$$(awk '/^description:/{sub(/^description:[[:space:]]*/,""); print; exit}' "$$dir/SKILL.md"); \
+			{ echo "---"; echo "description: $$desc"; echo "globs: \"**/*\""; echo "alwaysApply: false"; echo "---"; awk 'BEGIN{fm=0} /^---$$/{fm++; next} fm>=2{print}' "$$dir/SKILL.md"; } > "$(TARGET)/.cursor/rules/$$skill.mdc"; \
 			echo "  ✓ $$skill"; \
 		done; \
 	else \
 		echo "Installing selected skills to $(TARGET)/.cursor/rules/"; \
 		for skill in $(SKILLS); do \
 			if [ -d "$(SKILLS_DIR)/$$skill" ]; then \
-				cp "$(SKILLS_DIR)/$$skill/SKILL.md" "$(TARGET)/.cursor/rules/$$skill.md"; \
+				desc=$$(awk '/^description:/{sub(/^description:[[:space:]]*/,""); print; exit}' "$(SKILLS_DIR)/$$skill/SKILL.md"); \
+				{ echo "---"; echo "description: $$desc"; echo "globs: \"**/*\""; echo "alwaysApply: false"; echo "---"; awk 'BEGIN{fm=0} /^---$$/{fm++; next} fm>=2{print}' "$(SKILLS_DIR)/$$skill/SKILL.md"; } > "$(TARGET)/.cursor/rules/$$skill.mdc"; \
 				echo "  ✓ $$skill"; \
 			else \
 				echo "  ✗ $$skill (not found)"; \
