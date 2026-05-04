@@ -65,7 +65,7 @@ This repo does not compete with static analyzers — it tells you which ones to 
 |---|---|
 | [`.skills/`](.skills/) | 10 Claude Code skills with automatic domain detection (backend/frontend/data/AI). Each skill reads the appropriate reference files based on the code being reviewed. |
 
-Available skills: `assess-secure-coding`, `assess-coding-principles`, `assess-observability`, `assess-configuration`, `assess-testing`, `assess-ci-cd`, `assess-iac`, `assess-contract-design`, `assess-system-design`, `assess-data-design`. Plus `overview` for in-session discovery.
+Available skills: `assess-secure-coding`, `assess-coding-principles`, `assess-observability`, `assess-configuration`, `assess-testing`, `assess-ci-cd`, `assess-iac`, `assess-contract-design`, `assess-system-design`, `assess-data-design`. Plus `overview` for in-session discovery — supports three modes: default catalog, advisory (`--ask` to recommend a skill), and how-to (`/overview <skill-name>` for usage of one specific skill).
 
 ---
 
