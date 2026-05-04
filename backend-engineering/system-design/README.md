@@ -6,6 +6,26 @@ This is the **index**. Each level has its own file.
 
 ---
 
+## Reading order
+
+Read the four zoom levels in order, smallest to largest:
+
+1. [`code-level.md`](code-level.md) — patterns inside a class or module (GoF, idioms).
+2. [`application-level.md`](application-level.md) — how code is organized inside one deployable (Clean, Hexagonal, layered, package boundaries).
+3. [`integration-level.md`](integration-level.md) — how services coordinate and communicate (EIP, sagas, event-driven, service mesh).
+4. [`system-level.md`](system-level.md) — global topology (monolith, microservices, serverless, event-driven, hybrid).
+
+Each level builds vocabulary the next one assumes. If you're new to the repo, this sequence is the shortest path from "what's a pattern" to "what's an architecture".
+
+Then there are three cross-level files. They aren't levels — they apply across all four:
+
+- [`scalability.md`](scalability.md) and [`resilience.md`](resilience.md) are **quality-attribute lenses**. Read them after you have the four zoom levels in mind, and apply each lens to the level you're currently working at (e.g. *"how does this integration pattern hold up under 10× load?"* / *"what fails first when this dependency goes down?"*).
+- [`methodology.md`](methodology.md) is the **meta layer** — ADRs, fitness functions, trade-off analysis, quality-attribute scenarios. Read it when you're about to make a decision and need a record of why you chose this design instead of the alternatives.
+
+If you're not new and just want to look something up, the **Scope** table below maps every file to the question it answers.
+
+---
+
 ## Well-Architected Pillars
 
 A well-architected system addresses these pillars explicitly. Each links to where the content lives in this repo.

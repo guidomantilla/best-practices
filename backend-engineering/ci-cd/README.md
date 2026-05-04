@@ -315,11 +315,46 @@ Four metrics that measure engineering team performance. Use them to identify bot
 - Automated rollback → lower MTTR
 - Trunk-based dev + CI → higher deployment frequency
 
+### How to instrument
+
+Each metric has a clear data source. The skill is correlating them, not collecting them — most of the data already exists in your CI, your VCS, and your incident tracker.
+
+| Metric | Source of truth | How to compute |
+|---|---|---|
+| **Deployment frequency** | CD events (the moment a deploy succeeds in production) | Count successful production deploys per day / week. Source: GitHub Actions deploy job, ArgoCD sync events, Spinnaker pipeline events, the CD platform's audit log. |
+| **Lead time for changes** | PR merge timestamp → first production deploy that includes that PR | For each merged PR, find the production deploy that first contained its commit. Lead time = `deploy_time - merge_time`. Source: VCS API (merge time) + CD events (deploy time + commit SHA). |
+| **Change failure rate** | Incidents linked to deploys / total deploys | For each incident, link it to the deploy that introduced the regression (manual tag or auto-correlation by time window). CFR = incidents-from-deploys / total-deploys over a window. Source: incident tracker (PagerDuty, Opsgenie, Incident.io) + CD events. |
+| **Mean time to recover** | Incident open → incident resolved timestamps | For each incident: `MTTR = resolved_at - opened_at`. Average over the window. Source: incident tracker. |
+
+Practical rules:
+- **Tag deploys with the commit SHA and PR list.** Without this, lead time and CFR can't be computed automatically.
+- **Tag incidents with the deploy that caused them** (post-mortem field, even if backfilled the next day). Without this, CFR is guesswork.
+- **Pick a consistent window.** Rolling 30 or 90 days is standard. Comparing across windows of different sizes is meaningless.
+- **Production-only.** Deploys to staging/QA don't count. If they do, you'll game your own metrics.
+
+### Tooling
+
+| Type | Tools | Notes |
+|---|---|---|
+| **Managed DORA dashboards** | Datadog DORA Metrics, Sleuth, LinearB, Faros AI, Apollo (GitHub native) | Auto-correlate from VCS + CI + incident-tracker integrations. Lowest setup cost, locked into the vendor's correlation logic. |
+| **Roll your own** | CI events → BigQuery / Snowflake; VCS via GitHub/GitLab API; incidents via PagerDuty webhooks; metrics in Grafana / Looker | Highest flexibility, you own the joins. Useful when you want non-standard slicing (per service, per team, per env). |
+| **Open-source** | Four Keys (Google Cloud), Apache DevLake | Self-hosted dashboards. Reasonable middle ground. |
+
+Most teams overestimate the work. A first version is usually:
+1. Tag every deploy in CD with `{commit_sha, pr_number, env, timestamp}`.
+2. Pipe deploy events to a single store (BigQuery table, Cloud Logging dataset, even a CSV in S3 to start).
+3. Pull merged PRs from VCS API daily, join on commit SHA → lead time.
+4. Pull incidents from the tracker daily, join on deploy timestamp ± 24h or explicit tag → CFR + MTTR.
+
+You can have the four numbers in a week. Refining the correlation (auto-tag incidents to deploys, exclude reverts, etc.) is the long tail.
+
 ### Anti-patterns
-- Measuring DORA without acting on findings
-- Using DORA to compare teams (context differs)
-- Gaming metrics (deploying empty commits to boost frequency)
-- Ignoring MTTR (deploying fast but recovering slowly = fragile system)
+- Measuring DORA without acting on findings.
+- Using DORA to compare teams (context differs).
+- Gaming metrics (deploying empty commits to boost frequency).
+- Ignoring MTTR (deploying fast but recovering slowly = fragile system).
+- Computing lead time from first commit instead of merge — penalizes long-lived branches arbitrarily; merge-to-prod is the actionable interval.
+- Counting failed deploys as deploys (inflates frequency, deflates CFR).
 
 **Source:** Nicole Forsgren, Jez Humble, Gene Kim — *Accelerate* (2018)
 

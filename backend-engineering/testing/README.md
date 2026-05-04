@@ -322,7 +322,7 @@ For API-only E2E (no browser), see §4 tooling (Hurl, Playwright API mode, k6 fu
 
 ## 6. Contract Testing
 
-Verify that services agree on their interface without deploying both together.
+Verify that two services agree on their interface without deploying both together. In a microservices world it is arguably the most important cross-team test — it catches integration drift at PR time instead of at production incident time.
 
 ### When to use
 - Multiple teams own different services that talk to each other
@@ -332,35 +332,70 @@ Verify that services agree on their interface without deploying both together.
 
 ### How it works
 ```
-Consumer writes contract → Contract stored centrally → Provider verifies against contract
+Consumer writes contract → Contract stored centrally (broker) → Provider verifies against contract on every PR
 ```
 
-### Types
+### Types and when each fits
 
-| Type | Who defines the contract | Use case |
-|---|---|---|
-| **Consumer-driven** | The consumer defines what it needs from the provider | Microservices with clear consumer/provider relationship |
-| **Provider-driven** | The provider publishes its schema/spec | Public APIs, OpenAPI-first development |
-| **Bi-directional** | Both sides define expectations, verified independently | Pact bi-directional, schema-based |
+| Type | Who defines the contract | When it fits | When it doesn't |
+|---|---|---|---|
+| **Consumer-driven** | The consumer declares what it actually uses (subset of the provider's surface) | Microservices with clear consumer/provider relationship; consumers know what they depend on; breaking changes should fail fast at the provider | Public APIs with unknown consumers; provider can't enumerate who depends on which fields |
+| **Provider-driven** | The provider publishes its full schema/spec; consumers conform | Public APIs, OpenAPI-first or proto-first development; provider is the source of truth | Internal services where consumers want more freedom and the provider isn't sure what's used |
+| **Bi-directional** | Both sides define expectations, verified independently against the spec | Mature platforms with schema registries; cross-organizational contracts | Small teams — overhead exceeds value |
+
+In practice most internal microservices benefit from **consumer-driven** because it answers the most actionable question: *"can the provider remove this field without breaking the consumer?"*
+
+### Tool comparison
+
+| Tool | Approach | When it shines | Trade-offs |
+|---|---|---|---|
+| **Pact** | Consumer-driven; consumer records mock interactions, provider replays them | Polyglot teams; HTTP/gRPC; service-to-service | Requires a Pact Broker (self-hosted or PactFlow); learning curve for the mock-then-replay model |
+| **Spring Cloud Contract** | Provider-driven on the JVM; provider publishes contracts as Groovy/YAML/Java; consumer generates stubs | JVM-heavy stacks (Spring Boot ecosystem); when the provider should be source of truth | Less polyglot; tighter coupling to Spring tooling |
+| **Schemathesis** | Property-based testing from an OpenAPI spec; generates inputs to find inconsistencies | Provider-driven validation of OpenAPI compliance; finding cases the spec missed | Doesn't validate consumer expectations; not consumer-driven |
+| **OpenAPI diff / buf breaking** | Spec-level breaking-change detection between versions | Cheap CI gate that catches removed fields, narrowed types, renamed paths | Doesn't validate runtime behavior — only catches changes the spec describes |
+| **Protovalidate** | Schema-level constraints inside protobuf | gRPC services where you want runtime validation embedded in the schema | Validation, not contract testing per se — pairs with Pact or Spring Cloud Contract |
+
+### Where it fits in CI
+
+The deterministic flow most teams converge to:
+
+1. **Consumer side** — consumer test suite runs the contract test, generates a contract artifact, publishes it to the broker (Pact Broker, or git-tracked file in monorepos) tagged with the consumer version.
+2. **Provider side** — on every provider PR, fetch all consumer contracts from the broker, replay them against the provider build, fail the PR if any contract no longer holds.
+3. **Provider deploy gate** — before promoting a provider build to production, check `can-i-deploy` (or equivalent) against the broker: *"have all consumers I'm pinned for verified against this version?"* If not, block the deploy.
+
+Result: a provider can never accidentally remove a field a consumer uses, and a consumer can never silently expect a field the provider doesn't return.
+
+### Versioning contracts with consumers
+
+Contracts must be versioned alongside both consumer and provider. Patterns:
+
+- **Tag contracts with consumer version + branch** so the broker knows which contract corresponds to which deployed consumer.
+- **Pact Broker matrix view** (or equivalent) shows compatibility: *which provider versions are compatible with which consumer versions in which environments?*
+- **Pending contracts** allow new consumer expectations to land without immediately breaking the provider — the contract is published but doesn't fail the provider build until "promoted". Useful for staggered rollouts.
 
 ### Principles
-- Contracts test the **interface** (request shape, response shape, status codes), not behavior
-- Contracts run in CI on both sides — breaking changes are caught before merge
-- Contracts are versioned and centrally stored (Pact Broker, schema registry)
+- Contracts test the **interface** (request shape, response shape, status codes), not behavior — behavior lives in unit/integration tests.
+- Contracts run in CI on **both sides** — breaking changes are caught before merge, not after deploy.
+- Contracts are versioned and centrally stored (Pact Broker, schema registry).
+- The broker is part of the deploy gate, not a passive archive.
 
 ### Anti-patterns
-- Using E2E tests to verify contracts (slow, fragile, requires full deployment)
-- Contracts that test implementation details (field ordering, exact timestamps)
-- Consumer contracts that are too strict (break on additive changes that shouldn't be breaking)
-- No CI integration — contracts exist but aren't enforced
+- Using E2E tests to verify contracts (slow, fragile, requires full deployment).
+- Contracts that test implementation details (field ordering, exact timestamps, full body match for partial reads).
+- Consumer contracts that are too strict — break on additive changes that shouldn't be breaking (extra optional fields).
+- No CI integration — contracts exist but aren't enforced on every PR.
+- Provider not consulting the broker before deploys (`can-i-deploy` skipped) — contracts catch nothing if the provider ships before consumers verify.
+- One-shot contracts not tied to consumer versions — broker forgets which contract belongs to which deployed code.
 
 ### Tooling
 | Tool | Type | Languages |
 |---|---|---|
 | **Pact** | Consumer-driven contracts | Go, Java, Python, JS/TS, Rust, .NET |
-| **Protovalidate** | Schema-based (gRPC/protobuf) | Any protobuf language |
-| **OpenAPI diff** | Provider-driven (breaking change detection) | Language-agnostic |
-| **Schemathesis** | Property-based API testing from OpenAPI spec | Python, CLI |
+| **Spring Cloud Contract** | Provider-driven (JVM) | Java, Kotlin, Groovy |
+| **Schemathesis** | Property-based API testing from OpenAPI | Python, CLI |
+| **Protovalidate** | Schema-level (gRPC/protobuf) | Any protobuf language |
+| **OpenAPI diff / buf breaking** | Spec breaking-change detection | Language-agnostic |
+| **Pact Broker / PactFlow** | Contract storage + `can-i-deploy` gate | Language-agnostic |
 
 ---
 
