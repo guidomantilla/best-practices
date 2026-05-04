@@ -85,14 +85,23 @@ Output quality depends heavily on how you prompt the skill. The same skill produ
 | # | Pattern | Invocation | Output | When to use |
 |---|---|---|---|---|
 | 1 | **Blind** (default) | `/assess-secure-coding` | Checklist of findings with severity. Fast, broad. | You know the codebase, want a quick scan. |
-| 2 | **Scoped** | `/assess-secure-coding src/auth/` | Same output, restricted to that path. | You want to limit attention to a part of the codebase. |
+| 2 | **Scoped** *(first-class)* | `/assess-secure-coding src/auth/` | Same output, restricted to that path. If no path is given, the skill drops a one-liner reminder that you can scope. | You want to limit attention to a part of the codebase. |
 | 3 | **Narrative context** | `/assess-secure-coding este es greenfield, foco auth, datos PHI` | Findings adapted to the context you stated (stage, domain, constraints). | You want the skill to understand *what* you're building before judging it. |
 | 4 | **Roadmap-driven** | `/assess-testing dame un roadmap por fases con días estimados` | A phased plan instead of a finding list — what to build first, second, etc. | You want guidance, not audit. Onboarding, greenfield projects, post-incident planning. |
-| 5 | **Conversational / intake-first** | `/assess-secure-coding preguntame el contexto antes de empezar` | Skill asks 3–5 questions, then emits a tailored review. | You want the skill to drive the context discovery. (First-class flag landing in #12.) |
+| 5 | **Conversational / intake-first** *(first-class)* | `/assess-secure-coding --ask` *or* `/assess-secure-coding preguntame el contexto antes de empezar` | Skill asks 4 generic + 1–2 skill-specific questions, then emits a tailored review. Waits for answers before reading files. | You want the skill to drive the context discovery. |
 | 6 | **Deterministic** | `/assess-secure-coding and after the review, generate me a scanning script with the recommended tools` | LLM review (non-deterministic) + a runnable scanning script (deterministic, CI-ready). | You need a reproducible CI gate — see [Reproducibility](#reproducibility--what-to-expect-what-to-do) for the full pattern. |
 | 7 | **Plan-first** | `/assess-system-design ... confirma cómo procederás antes de arrancar` | Skill responds with a structured plan (phases, files it will read, what it will NOT do) and waits for explicit "procede" before consuming tokens. | You want to align expectations BEFORE a 3–5 minute long review. Cheap to redirect; surfaces wrong assumptions early. |
 
 These compose. A common combination is **scoped + narrative + roadmap-driven**: `/assess-secure-coding src/auth/ greenfield, datos PHI, dame un roadmap`.
+
+### Progress reporting
+
+Long invocations (3–5 minutes) announce progress at two levels so you can see the skill is alive and roughly where it is:
+
+- **Stage** (3 top-level): *"Exploring codebase..."*, *"Cross-referencing knowledge base..."*, *"Compiling findings..."*
+- **Area** (within each stage): *"Reading auth handlers (3 files)..."*, *"Loading backend-engineering/secure-coding/..."*
+
+This applies to every skill — no flag needed.
 
 ### What context can skills consume?
 

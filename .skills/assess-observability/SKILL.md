@@ -8,6 +8,57 @@ category: hybrid
 
 Review code for observability gaps and instrumentation anti-patterns. Produce actionable findings — not generic "add more logging" advice.
 
+## Invocation modes
+
+How to interpret the user's prompt and adapt behavior. These rules apply BEFORE running Domain Detection.
+
+### Scope hint (positional path)
+
+If the first non-flag argument after the slash command looks like a path or glob (e.g., `/assess-observability src/auth/` or `/assess-observability terraform/`), restrict the autoexplore to that path. Treat everything else in the prompt as additional context.
+
+If no path is provided AND intake is not triggered, after the first short response include a one-liner reminder: *"I'm reviewing the entire codebase. You can scope a future run with `/assess-observability <path>`."*
+
+### Intake mode
+
+Trigger if the prompt contains either:
+
+- The flag `--ask` (anywhere in the invocation), or
+- A natural-language equivalent: *"preguntame"*, *"ask me first"*, *"ask me before"*, *"necesito que me preguntes"*, *"intake first"*, or any phrase clearly requesting questions before the review.
+
+When triggered, BEFORE reading any files, ask these questions in a single message and wait for answers:
+
+**General context (always ask):**
+
+   1. ¿En qué etapa está el proyecto? (early-MVP, growth, production, maintenance)
+   2. ¿Cuál es el foco o preocupación principal hoy?
+   3. ¿Hay áreas que prefieras que ignore o que ya sabes que no aplican?
+   4. ¿Hay algún constraint inmediato? (deadline, regulación, costos, scaling)
+
+**Specific to this skill:**
+
+   5. ¿Stack actual? (Datadog / New Relic / Grafana+Prometheus / OTel only / nada)
+   6. ¿Tenés SLOs / SLIs definidos?
+
+After receiving answers, run the autoexplore scoped/biased by the answers. If the user already provided a path (scope hint), do not re-ask about scope — only ask the questions whose answers aren't already implied by the prompt.
+
+### Progress reporting
+
+During execution, announce progress at two levels so the user can see the skill is alive and roughly where it is. Keep messages short — one line each, no decoration.
+
+**Stage announcements** (3 top-level, in this order):
+
+1. *"Exploring codebase..."*
+2. *"Cross-referencing knowledge base..."*
+3. *"Compiling findings..."*
+
+**Area announcements** (within each stage, only when the area is non-trivial):
+
+- *"  - Reading auth handlers (3 files)..."*
+- *"  - Loading backend-engineering/secure-coding/..."*
+- *"  - Aggregating findings by severity..."*
+
+Don't announce every individual file. Group by area and emit one line per area as you enter it.
+
 ## Domain Detection
 
 | Signal | Domain | Context files to read |
