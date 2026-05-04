@@ -139,7 +139,7 @@ Do NOT flag everything. Only report issues that have real impact on maintainabil
 | Design | `PMD` | God class, coupling, complexity, duplication (CPD) | Maven/Gradle plugin |
 | Design | `SpotBugs` | Code smells, bad practices | Maven/Gradle plugin |
 | Architecture | `ArchUnit` | Architectural rules (layer dependencies, naming) | JUnit dependency |
-| Metrics | `SonarQube` | Maintainability, complexity, duplication, debt | Docker or self-hosted |
+| Metrics | `SonarQube` | Code quality + security: maintainability, complexity, duplication, tech debt | Docker or self-hosted |
 | Duplication | `CPD` (PMD) | Copy-paste detection | Included with PMD |
 
 ### Python
@@ -162,7 +162,7 @@ Do NOT flag everything. Only report issues that have real impact on maintainabil
 ### Cross-Language
 | Category | Tool | What it detects | Install |
 |---|---|---|---|
-| Metrics | `SonarQube` | Maintainability, complexity, duplication, tech debt | Docker or self-hosted |
+| Metrics | `SonarQube` | Code quality + security: maintainability, complexity, duplication, tech debt | Docker or self-hosted |
 | Metrics | `Code Climate` | Maintainability score, duplication | SaaS |
 | Duplication | `jscpd` | Cross-language copy-paste detection | `npm install -g jscpd` |
 

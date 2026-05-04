@@ -135,7 +135,7 @@ Do not apply regulations that don't correspond to the project's jurisdiction. If
 | Linter | `staticcheck` | Bugs, performance, some security | `go install honnef.co/go/tools/cmd/staticcheck@latest` |
 | SCA | `govulncheck` | Go vulnerability database | `go install golang.org/x/vuln/cmd/govulncheck@latest` |
 | SCA | `trivy` | Dependency scanning | `brew install trivy` |
-| Secrets | `gitleaks` | Hardcoded secrets | `brew install gitleaks` |
+| Secrets | `gitleaks` | Hardcoded secrets in code and git history | `brew install gitleaks` |
 | Container | `trivy` | Docker image CVEs | (same binary) |
 
 ### Rust
@@ -145,7 +145,7 @@ Do not apply regulations that don't correspond to the project's jurisdiction. If
 | SCA | `cargo-deny` | Vulnerabilities, licenses, bans | `cargo install cargo-deny` |
 | SAST | `semgrep` | Static analysis | `pip install semgrep` |
 | Linter | `clippy` | Common mistakes including security | `rustup component add clippy` |
-| Secrets | `gitleaks` | Hardcoded secrets | `brew install gitleaks` |
+| Secrets | `gitleaks` | Hardcoded secrets in code and git history | `brew install gitleaks` |
 | Fuzzing | `cargo-fuzz` | Fuzz testing | `cargo install cargo-fuzz` |
 
 ### Java
@@ -153,10 +153,10 @@ Do not apply regulations that don't correspond to the project's jurisdiction. If
 |---|---|---|---|
 | SAST | `semgrep` | Static analysis with Java/Spring rules | `pip install semgrep` |
 | SAST | `spotbugs` + `find-sec-bugs` | Security bugs in bytecode | Maven/Gradle plugin |
-| SAST | `SonarQube` | Code quality and security | Docker or self-hosted |
+| SAST | `SonarQube` | Code quality + security: maintainability, complexity, duplication, tech debt | Docker or self-hosted |
 | SCA | `trivy` | Dependency scanning | `brew install trivy` |
 | SCA | `dependency-check` (OWASP) | NVD vulnerability check | Maven/Gradle plugin |
-| Secrets | `gitleaks` | Hardcoded secrets | `brew install gitleaks` |
+| Secrets | `gitleaks` | Hardcoded secrets in code and git history | `brew install gitleaks` |
 
 ### Python
 | Category | Tool | What it does | Install |
@@ -166,7 +166,7 @@ Do not apply regulations that don't correspond to the project's jurisdiction. If
 | SCA | `pip-audit` | Vulnerability database check | `pip install pip-audit` |
 | SCA | `safety` | CVEs in requirements.txt | `pip install safety` |
 | SCA | `trivy` | Dependency scanning | `brew install trivy` |
-| Secrets | `gitleaks` | Hardcoded secrets | `brew install gitleaks` |
+| Secrets | `gitleaks` | Hardcoded secrets in code and git history | `brew install gitleaks` |
 
 ### TypeScript / JavaScript
 | Category | Tool | What it does | Install |
@@ -175,14 +175,14 @@ Do not apply regulations that don't correspond to the project's jurisdiction. If
 | SAST | `eslint-plugin-security` | ESLint security rules for Node.js | `npm install eslint-plugin-security` |
 | SCA | `npm audit` | Known vulnerabilities in node_modules | built-in |
 | SCA | `trivy` | Dependency scanning | `brew install trivy` |
-| Secrets | `gitleaks` | Hardcoded secrets | `brew install gitleaks` |
+| Secrets | `gitleaks` | Hardcoded secrets in code and git history | `brew install gitleaks` |
 | Headers | `helmet` | Security HTTP headers for Express/Node | `npm install helmet` |
 
 ### Cross-Language
 | Category | Tool | What it does | Install |
 |---|---|---|---|
 | SAST | `semgrep` | Universal static analysis | `pip install semgrep` |
-| Secrets | `gitleaks` | Git repo secret scanning | `brew install gitleaks` |
+| Secrets | `gitleaks` | Hardcoded secrets in code and git history | `brew install gitleaks` |
 | Secrets | `trufflehog` | Deep secret scanning (git history) | `brew install trufflehog` |
 | SCA | `trivy` | Dependencies + containers + IaC | `brew install trivy` |
 | DAST | `OWASP ZAP` | Dynamic testing on running apps | `brew install --cask zap` |

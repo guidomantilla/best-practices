@@ -149,20 +149,20 @@ db_url = os.getenv("DATABASE_URL", "postgres://admin:password123@prod-db:5432/ap
 | Config | `viper` | Multi-source config with precedence | `go get github.com/spf13/viper` |
 | Config | `envconfig` | Struct-based env var parsing + validation | `go get github.com/kelseyhightower/envconfig` |
 | Config | `koanf` | Composable config providers | `go get github.com/knadh/koanf` |
-| Secrets | `gitleaks` | Secrets in git history | `brew install gitleaks` |
+| Secrets | `gitleaks` | Hardcoded secrets in code and git history | `brew install gitleaks` |
 
 ### Rust
 | Category | Tool | What it detects | Install |
 |---|---|---|---|
 | Config | `config-rs` | Layered config from files, env, defaults | `cargo add config` |
-| Secrets | `gitleaks` | Secrets in git history | `brew install gitleaks` |
+| Secrets | `gitleaks` | Hardcoded secrets in code and git history | `brew install gitleaks` |
 
 ### Python
 | Category | Tool | What it detects | Install |
 |---|---|---|---|
 | Config | `pydantic-settings` | Typed env var parsing + validation | `pip install pydantic-settings` |
 | Config | `dynaconf` | Multi-source, environment-aware | `pip install dynaconf` |
-| Secrets | `gitleaks` | Secrets in git history | `brew install gitleaks` |
+| Secrets | `gitleaks` | Hardcoded secrets in code and git history | `brew install gitleaks` |
 | Secrets | `detect-secrets` | Secrets in current code | `pip install detect-secrets` |
 
 ### TypeScript / JavaScript
@@ -170,13 +170,13 @@ db_url = os.getenv("DATABASE_URL", "postgres://admin:password123@prod-db:5432/ap
 |---|---|---|---|
 | Config | `zod` | Schema validation for config at startup | `npm install zod` |
 | Config | `convict` | Schema-based config management | `npm install convict` |
-| Secrets | `gitleaks` | Secrets in git history | `brew install gitleaks` |
+| Secrets | `gitleaks` | Hardcoded secrets in code and git history | `brew install gitleaks` |
 
 ### Cross-Language
 | Category | Tool | What it detects | Install |
 |---|---|---|---|
-| Secrets | `gitleaks` | Hardcoded secrets in git | `brew install gitleaks` |
-| Secrets | `trufflehog` | Deep secret scanning (history) | `brew install trufflehog` |
+| Secrets | `gitleaks` | Hardcoded secrets in code and git history | `brew install gitleaks` |
+| Secrets | `trufflehog` | Deep secret scanning (git history) | `brew install trufflehog` |
 | Feature flags | `grep` for stale flags | Flags set to 100% for > N days | manual review |
 | Local dev | `direnv` | Env var management per directory | `brew install direnv` |
 
