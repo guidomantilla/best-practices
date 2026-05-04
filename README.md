@@ -78,6 +78,36 @@ What to expect when you invoke a skill.
 - **Defined scope.** Each skill is bounded. `assess-coding-principles` evaluates *how* code is written, not *what* exists; it cannot tell you what to build next. Combining skills covers more ground than asking one skill to do everything.
 - **Predictable naming.** Every skill is `assess-<domain>` (e.g. `assess-secure-coding`, `assess-iac`). Once you know the pattern, the slash for any topic is guessable. The `overview` skill is the one exception — it's a discovery entrypoint, not an assessment.
 
+## Invocation patterns
+
+Output quality depends heavily on how you prompt the skill. The same skill produces a quick checklist, a phased roadmap, or a planning conversation depending on what you ask for. Seven patterns cover the useful range — each `assess-*/SKILL.md` lists concrete examples for that skill, but the underlying patterns are universal.
+
+| # | Pattern | Invocation | Output | When to use |
+|---|---|---|---|---|
+| 1 | **Blind** (default) | `/assess-secure-coding` | Checklist of findings with severity. Fast, broad. | You know the codebase, want a quick scan. |
+| 2 | **Scoped** | `/assess-secure-coding src/auth/` | Same output, restricted to that path. | You want to limit attention to a part of the codebase. |
+| 3 | **Narrative context** | `/assess-secure-coding este es greenfield, foco auth, datos PHI` | Findings adapted to the context you stated (stage, domain, constraints). | You want the skill to understand *what* you're building before judging it. |
+| 4 | **Roadmap-driven** | `/assess-testing dame un roadmap por fases con días estimados` | A phased plan instead of a finding list — what to build first, second, etc. | You want guidance, not audit. Onboarding, greenfield projects, post-incident planning. |
+| 5 | **Conversational / intake-first** | `/assess-secure-coding preguntame el contexto antes de empezar` | Skill asks 3–5 questions, then emits a tailored review. | You want the skill to drive the context discovery. (First-class flag landing in #12.) |
+| 6 | **Deterministic** | `/assess-secure-coding and after the review, generate me a scanning script with the recommended tools` | LLM review (non-deterministic) + a runnable scanning script (deterministic, CI-ready). | You need a reproducible CI gate — see [Reproducibility](#reproducibility--what-to-expect-what-to-do) for the full pattern. |
+| 7 | **Plan-first** | `/assess-system-design ... confirma cómo procederás antes de arrancar` | Skill responds with a structured plan (phases, files it will read, what it will NOT do) and waits for explicit "procede" before consuming tokens. | You want to align expectations BEFORE a 3–5 minute long review. Cheap to redirect; surfaces wrong assumptions early. |
+
+These compose. A common combination is **scoped + narrative + roadmap-driven**: `/assess-secure-coding src/auth/ greenfield, datos PHI, dame un roadmap`.
+
+### What context can skills consume?
+
+When you reference external material in the prompt, this is what works today:
+
+| Format | Supported? | How |
+|---|---|---|
+| Source code (`.py`, `.go`, `.ts`, …) | Yes | Native via Read |
+| Markdown (`.md`) | Yes | Native |
+| URLs (HTTP) | Yes | Via WebFetch — may not bypass auth |
+| PDFs | **Not natively** | Convert first: *"convertí el PDF con `pdftotext` y luego procesalo"*. Without instruction, PDFs are silently ignored. |
+| Confluence, Jira, Notion | Only with MCP | Requires the corresponding MCP server configured in the user's environment |
+
+If a skill encounters input it cannot process today, it may silently skip it. When in doubt, mention the file format explicitly and how it should be handled.
+
 ## Reproducibility — what to expect, what to do
 
 > **Skill output is non-deterministic.** Skills are powered by LLMs. Same skill + same code + same prompt can produce slightly different findings between runs. This is a feature (the skill adapts to context) and a limitation (you cannot diff outputs to detect regressions like you would with `ruff` or `gosec`).

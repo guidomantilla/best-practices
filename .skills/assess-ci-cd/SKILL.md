@@ -191,3 +191,11 @@ Only list capabilities that are relevant to the findings and context.
 - Don't assume K8s — many services deploy to serverless, PaaS, or bare metal
 - Don't flag code you haven't read
 - Don't recommend SLSA Level 4 for a startup MVP
+
+## Invocation examples
+
+These cover the most useful patterns for this skill. The full list (7 patterns + bonus on context formats) is in the [Invocation patterns section of the README](../../README.md#invocation-patterns).
+
+- **Blind** — `/assess-ci-cd`
+- **Narrative** — `/assess-ci-cd stack: GitHub Actions, deploy a EKS via ArgoCD`
+- **Roadmap** — `/assess-ci-cd dame un plan para llegar a multi-env con rollback automático`

@@ -188,3 +188,11 @@ Only list capabilities that are relevant to the findings and context.
 - Don't recommend runtime config for things that don't need it
 - Don't flag feature flags as "stale" without evidence of when they reached 100%
 - Don't assume the project needs a config library — for simple services with 3 env vars, a manual struct is fine
+
+## Invocation examples
+
+These cover the most useful patterns for this skill. The full list (7 patterns + bonus on context formats) is in the [Invocation patterns section of the README](../../README.md#invocation-patterns).
+
+- **Blind** — `/assess-configuration`
+- **Scoped** — `/assess-configuration config/ deploy/`
+- **Deterministic** — `/assess-configuration y dame un script con gitleaks + validators custom`

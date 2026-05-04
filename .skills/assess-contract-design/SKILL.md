@@ -141,3 +141,11 @@ Only list capabilities that are relevant to the findings and context.
 - Don't recommend switching message brokers (Kafka vs RabbitMQ) — that's an infrastructure decision
 - Don't flag code you haven't read
 - Don't recommend AsyncAPI/OpenAPI if the team has 1 service and 1 consumer (overhead may not be worth it)
+
+## Invocation examples
+
+These cover the most useful patterns for this skill. The full list (7 patterns + bonus on context formats) is in the [Invocation patterns section of the README](../../README.md#invocation-patterns).
+
+- **Scoped** — `/assess-contract-design proto/`
+- **Roadmap** — `/assess-contract-design vamos a migrar de REST a gRPC, dame el plan`
+- **Plan-first** — `/assess-contract-design API pública v1→v2, confirma cómo procederás`

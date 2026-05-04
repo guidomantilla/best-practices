@@ -179,3 +179,11 @@ Only list capabilities that are relevant to the findings and context.
 - Don't assume AWS — check the actual provider before flagging
 - Don't flag code you haven't read
 - Don't recommend OPA custom policies when Checkov built-in rules cover the case
+
+## Invocation examples
+
+These cover the most useful patterns for this skill. The full list (7 patterns + bonus on context formats) is in the [Invocation patterns section of the README](../../README.md#invocation-patterns).
+
+- **Scoped** — `/assess-iac terraform/`
+- **Deterministic** — `/assess-iac y dame un script con tfsec + checkov + trivy`
+- **Narrative** — `/assess-iac stack: Terraform AWS + Helm chart, foco compliance HIPAA`

@@ -142,3 +142,11 @@ Only list capabilities that are relevant to the findings and context.
 - Don't flag code you haven't read or architecture you haven't understood
 - Don't ignore team size and maturity — the "right" architecture depends on who's building it
 - Don't say "it depends" without explaining the trade-offs and making a recommendation for the detected context
+
+## Invocation examples
+
+These cover the most useful patterns for this skill. The full list (7 patterns + bonus on context formats) is in the [Invocation patterns section of the README](../../README.md#invocation-patterns).
+
+- **Plan-first** — `/assess-system-design confirma cómo procederás antes de arrancar`
+- **Narrative** — `/assess-system-design monolito con 200k DAUs, planeamos extraer 2 servicios`
+- **Roadmap** — `/assess-system-design dame el roadmap de migración por fases`

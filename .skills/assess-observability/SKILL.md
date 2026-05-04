@@ -164,3 +164,11 @@ Only list capabilities that are relevant to the findings and context.
 - Don't flag code you haven't read
 - Don't assume scale — a hobby project doesn't need sampling strategies
 - Don't recommend OpenTelemetry migration if the current instrumentation is working and well-structured
+
+## Invocation examples
+
+These cover the most useful patterns for this skill. The full list (7 patterns + bonus on context formats) is in the [Invocation patterns section of the README](../../README.md#invocation-patterns).
+
+- **Blind** — `/assess-observability`
+- **Narrative** — `/assess-observability servicio en producción con SLOs, foco logs y tracing distribuido`
+- **Deterministic** — `/assess-observability generame un script que valide que los handlers tengan tracing`

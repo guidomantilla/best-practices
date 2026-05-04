@@ -202,3 +202,11 @@ Only list capabilities that are relevant to the findings and context. Don't list
 - Don't recommend tools for languages not present in the project
 - Don't apply regulations that don't correspond to the project's jurisdiction
 - Don't list capabilities that aren't relevant to the current findings
+
+## Invocation examples
+
+These cover the most useful patterns for this skill. The full list (7 patterns + bonus on context formats) is in the [Invocation patterns section of the README](../../README.md#invocation-patterns).
+
+- **Blind** — `/assess-secure-coding`
+- **Narrative** — `/assess-secure-coding greenfield, datos PHI/PII, foco auth y APIs externas`
+- **Deterministic** — `/assess-secure-coding después del review, generame un security-scan.sh con las herramientas recomendadas`

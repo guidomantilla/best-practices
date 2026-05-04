@@ -220,3 +220,11 @@ Only list capabilities that are relevant to the findings and context.
 - Don't recommend caching for everything (some queries are fast enough without it)
 - Don't flag code you haven't read
 - Don't assume scale — a 1000-row table doesn't need pagination optimization
+
+## Invocation examples
+
+These cover the most useful patterns for this skill. The full list (7 patterns + bonus on context formats) is in the [Invocation patterns section of the README](../../README.md#invocation-patterns).
+
+- **Scoped** — `/assess-data-design migrations/ models/`
+- **Narrative** — `/assess-data-design Postgres + Redis + S3, foco performance y data lifecycle`
+- **Deterministic** — `/assess-data-design y dame un script para validar que las queries respeten los índices`

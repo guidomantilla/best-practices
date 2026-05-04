@@ -173,3 +173,11 @@ Only list capabilities that are relevant to the findings and context. Don't list
 - Don't recommend tools for languages not present in the project
 - Don't flag DRY violations for test code (repetition in tests is often clarity)
 - Don't assume — if the design intent is unclear, ask before flagging
+
+## Invocation examples
+
+These cover the most useful patterns for this skill. The full list (7 patterns + bonus on context formats) is in the [Invocation patterns section of the README](../../README.md#invocation-patterns).
+
+- **Blind** — `/assess-coding-principles`
+- **Scoped** — `/assess-coding-principles src/services/`
+- **Roadmap** — `/assess-coding-principles dame un plan de refactor priorizado por impacto`

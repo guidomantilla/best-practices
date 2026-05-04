@@ -226,3 +226,11 @@ Only list capabilities that are relevant to the findings and context.
 - Don't assume the project needs performance testing (only if scale/latency requirements exist)
 - Don't flag code you haven't read
 - Don't count tests — assess whether the important things are tested, not how many tests exist
+
+## Invocation examples
+
+These cover the most useful patterns for this skill. The full list (7 patterns + bonus on context formats) is in the [Invocation patterns section of the README](../../README.md#invocation-patterns).
+
+- **Roadmap** — `/assess-testing proyecto naciente, foco data-api, dame roadmap con días estimados`
+- **Plan-first** — `/assess-testing confirma cómo procederás antes de arrancar`
+- **Scoped** — `/assess-testing tests/integration/`
